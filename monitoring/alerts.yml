@@ -1,0 +1,44 @@
+
+groups:
+
+  - name: nimbustrace-alerts
+
+    rules:
+
+      # Monitored application down
+
+      - alert: MonitoredAppDown
+
+        expr: up{job="monitored-app"} == 0
+
+        for: 15s
+
+        labels:
+
+          severity: critical
+
+        annotations:
+
+          summary: "Monitored application is down"
+
+          description: "Prometheus cannot scrape the monitored Node.js service."
+
+
+      # Dashboard metrics unavailable
+
+      - alert: DashboardScrapeDown
+
+        expr: up{job="nimbustrace-dashboard"} == 0
+
+        for: 30s
+
+        labels:
+
+          severity: warning
+
+        annotations:
+
+          summary: "NimbusTrace dashboard metrics unavailable"
+
+          description: "Dashboard metrics endpoint is not responding."
+
