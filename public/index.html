@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NimbusTrace | Monitoring Dashboard</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <span class="logo-icon">✣</span>
+
+                <div>
+                    <h2>NimbusTrace</h2>
+                    <p>Cloud Observability</p>
+                </div>
+            </div>
+
+            <nav>
+                <a href="#dashboard" class="active">
+                    Dashboard
+                </a>
+
+                <a href="#services">
+                    Services
+                </a>
+
+                <a href="#incidents">
+                    Incidents
+                </a>
+
+                <a href="#architecture">
+                    Architecture
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                System Connected
+            </div>
+
+        </aside>
+
+        <!-- Main Dashboard -->
+
+        <main class="main-content">
+
+            <header class="top-header">
+
+                <div>
+                    <p class="subtitle">
+                        CLOUD OBSERVABILITY / CONTROL ROOM
+                    </p>
+
+                    <h1>Map Every Signal.</h1>
+
+                    <p class="description">
+                        Monitor your infrastructure,
+                        detect failures, and recover services automatically.
+                    </p>
+                </div>
+
+                <div class="live-status">
+                    <span class="status-dot"></span>
+                    LIVE
+                </div>
+
+            </header>
+
+            <!-- Statistics -->
+
+            <section class="stats-grid" id="dashboard">
+
+                <div class="stat-card">
+                    <p>Monitored Service</p>
+
+                    <h2 id="serviceStatus">
+                        CHECKING
+                    </h2>
+
+                    <span id="containerState">
+                        Container status
+                    </span>
+                </div>
+
+                <div class="stat-card">
+                    <p>Dashboard Uptime</p>
+
+                    <h2 id="uptime">
+                        0s
+                    </h2>
+
+                    <span>Application runtime</span>
+                </div>
+
+                <div class="stat-card">
+                    <p>API Requests</p>
+
+                    <h2 id="requestCount">
+                        0
+                    </h2>
+
+                    <span>Total requests</span>
+                </div>
+
+                <div class="stat-card">
+                    <p>Recovery Actions</p>
+
+                    <h2 id="recoveryCount">
+                        0
+                    </h2>
+
+                    <span>Successful restarts</span>
+                </div>
+
+            </section>
+
+            <!-- Service Architecture -->
+
+            <section class="dashboard-grid">
+
+                <div class="panel architecture-panel"
+                     id="architecture">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <p class="section-label">
+                                SERVICE MAP
+                            </p>
+
+                            <h2>Infrastructure Overview</h2>
+                        </div>
+
+                        <span class="badge">
+                            LIVE DATA
+                        </span>
+
+                    </div>
+
+                    <div class="architecture-flow">
+
+                        <div class="architecture-node frontend">
+                            <span>01 / FRONTEND</span>
+
+                            <h3>HTML + CSS + JavaScript</h3>
+
+                            <p>Modern monitoring dashboard</p>
+                        </div>
+
+                        <div class="arrow">↓</div>
+
+                        <div class="architecture-node backend">
+                            <span>02 / BACKEND</span>
+
+                            <h3>Node.js + Express.js</h3>
+
+                            <p>Backend API and Docker controller</p>
+                        </div>
+
+                        <div class="arrow">↓</div>
+
+                        <div class="architecture-node monitoring">
+                            <span>03 / MONITORING</span>
+
+                            <h3>Prometheus + Alertmanager</h3>
+
+                            <p>Metrics and failure alerts</p>
+                        </div>
+
+                        <div class="arrow">↓</div>
+
+                        <div class="architecture-node recovery">
+                            <span>04 / RECOVERY</span>
+
+                            <h3>Docker Engine API</h3>
+
+                            <p>Automatic container restart</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Recovery Controls -->
+
+                <div class="panel" id="services">
+
+                    <div class="panel-header">
+                        <h2>Recovery Controls</h2>
+                    </div>
+
+                    <p class="description">
+                        Restart the monitored service.
+                    </p>
+
+                    <button id="restartButton">
+                        ↻ Restart Service
+                    </button>
+
+                    <p id="actionMessage">
+                        Ready for action.
+                    </p>
+
+                    <a href="http://localhost:14301/targets"
+                       target="_blank">
+                        Open Prometheus Targets ↗
+                    </a>
+
+                    <br><br>
+
+                    <a href="http://localhost:14302"
+                       target="_blank">
+                        Open Alertmanager ↗
+                    </a>
+
+                </div>
+
+                <!-- Health Information -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h2>Health Status</h2>
+                    </div>
+
+                    <div class="health-row">
+                        <span>Dashboard API</span>
+                        <strong>ONLINE</strong>
+                    </div>
+
+                    <div class="health-row">
+                        <span>Prometheus</span>
+                        <strong>MONITORING</strong>
+                    </div>
+
+                    <div class="health-row">
+                        <span>Alertmanager</span>
+                        <strong>READY</strong>
+                    </div>
+
+                    <div class="health-row">
+                        <span>Monitored App</span>
+                        <strong id="appHealth">
+                            CHECKING
+                        </strong>
+                    </div>
+
+                </div>
+
+                <!-- Incident Feed -->
+
+                <div class="panel" id="incidents">
+
+                    <div class="panel-header">
+                        <h2>Incident Activity</h2>
+                    </div>
+
+                    <div id="incidentFeed">
+
+                        <p>
+                            Dashboard initialized.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <footer>
+
+                <p>
+                    NimbusTrace Self-Healing Infrastructure
+                </p>
+
+                <p>
+                    Docker | Prometheus | Alertmanager
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
+

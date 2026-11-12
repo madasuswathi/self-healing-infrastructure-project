@@ -1,0 +1,77 @@
+
+services:
+
+  dashboard:
+
+    build: .
+
+    container_name: nimbustrace-dashboard
+
+    environment:
+      PORT: "4300"
+      DOCKER_SOCKET: /var/run/docker.sock
+      MONITORED_CONTAINER: nimbustrace-monitored-app
+
+    ports:
+      - "4300:4300"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    depends_on:
+      - monitored-app
+
+    restart: unless-stopped
+
+
+  monitored-app:
+
+    build: .
+
+    container_name: nimbustrace-monitored-app
+
+    command: ["node", "monitored.js"]
+
+    environment:
+      PORT: "4304"
+
+    expose:
+      - "4304"
+
+    restart: unless-stopped
+
+
+  prometheus:
+
+    image: prom/prometheus:v3.5.0
+
+    container_name: nimbustrace-prometheus
+
+    ports:
+      - "4301:9090"
+
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+
+    depends_on:
+      - dashboard
+      - monitored-app
+
+    restart: unless-stopped
+
+
+  alertmanager:
+
+    image: prom/alertmanager:v0.28.1
+
+    container_name: nimbustrace-alertmanager
+
+    ports:
+      - "4302:9093"
+
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+
+    restart: unless-stopped
+
