@@ -1,0 +1,25 @@
+
+
+- name: Self-heal NimbusTrace monitored service
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Restart monitored application container
+      ansible.builtin.command:
+        cmd: docker compose -f /home/vagrant/vagrant/docker-compose.yml restart monitored-app
+      register: restart_result
+
+    - name: Wait for monitored application container
+      ansible.builtin.command:
+        cmd: docker inspect -f '{{ "{{" }}.State.Running{{ "}}" }}' nimbustrace-monitored-app
+      register: container_status
+      retries: 10
+      delay: 5
+      until: container_status.stdout == "true"
+
+    - name: Report recovery result
+      ansible.builtin.debug:
+        msg: "NimbusTrace monitored application restart completed."
+
