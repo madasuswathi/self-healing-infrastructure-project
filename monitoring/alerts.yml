@@ -9,7 +9,7 @@ groups:
 
       - alert: MonitoredAppDown
 
-        expr: up{job="monitored-app"} == 0
+        expr: up{job="monitored-node-app"} == 0
 
         for: 15s
 

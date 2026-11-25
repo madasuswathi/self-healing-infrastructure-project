@@ -1,10 +1,7 @@
-
 services:
 
   dashboard:
-
     build: .
-
     container_name: nimbustrace-dashboard
 
     environment:
@@ -25,9 +22,7 @@ services:
 
 
   monitored-app:
-
     build: .
-
     container_name: nimbustrace-monitored-app
 
     command: ["node", "monitored.js"]
@@ -35,16 +30,14 @@ services:
     environment:
       PORT: "4304"
 
-    expose:
-      - "4304"
+    ports:
+      - "4304:4304"
 
     restart: unless-stopped
 
 
   prometheus:
-
     image: prom/prometheus:v3.5.0
-
     container_name: nimbustrace-prometheus
 
     ports:
@@ -62,16 +55,16 @@ services:
 
 
   alertmanager:
-
     image: prom/alertmanager:v0.28.1
-
     container_name: nimbustrace-alertmanager
 
     ports:
       - "4302:9093"
 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
     volumes:
       - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
 
     restart: unless-stopped
-

@@ -1,25 +1,17 @@
-
 global:
-
   resolve_timeout: 5m
 
-
 route:
-
-  receiver: local-console
-
+  receiver: nimbustrace-webhook
   group_by:
     - alertname
     - severity
-
   group_wait: 10s
-
   group_interval: 30s
-
   repeat_interval: 2h
 
-
 receivers:
-
-  - name: local-console
-
+  - name: nimbustrace-webhook
+    webhook_configs:
+      - url: "http://host.docker.internal:4305/webhook"
+        send_resolved: false
